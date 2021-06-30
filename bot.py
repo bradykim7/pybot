@@ -54,6 +54,8 @@ async def on_message(message):
             totalscore+=float(raiderData['mythic_plus_best_runs'][i]['score'])
             # pprint(raiderData['mythic_plus_best_runs'][i]['score'])
         
-        await message.channel.send('\t'+raiderData['name']+'\'s Mythic+ Score :\t'+ str(round(totalscore)) + '\n' +'More Info\t:\t'+raiderData['profile_url'])
+        # await message.channel.send('\t'+raiderData['name']+'\'s Mythic+ Score :\t'+ str(round(totalscore)) + '\n' +'More Info\t:\t'+raiderData['profile_url'])
+        # raider score system change issue // prev : best run score  now: best run score == Tyrannical score + Fortified score
+        await message.channel.send('Info\t:\t'+raiderData['profile_url'])
 
 client.run(TOKEN)
