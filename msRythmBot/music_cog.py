@@ -25,8 +25,7 @@ class music_cog(commands.Cog):
         # 'with' means we use it and at the end, we throw away
         with YoutubeDL(self.YDL_OPTIONS) as ydl:
             try:
-                info = ydl.extract_info("ytsearch:%s" %
-                                        item, download=False)['entries'][0]
+                info = ydl.extract_info("ytsearch:%s" % item, download=False)['entries'][0]
             except Exception:
                 return False
         return {'source': info['formats'][0]['url'], 'title': info['title']}
@@ -63,20 +62,32 @@ class music_cog(commands.Cog):
     @commands.command()
     async def p(self, ctx, *args):
         query = " ".join(args)
-        voice_channel = ctx.author.voice.channel
-
-        if voice_channel is None:
-            await ctx.send("Connected")
-        else:
+        # voice_channel = ctx.author.voice.channel
+        # print(voice_channel)
+        try :
+            voice_channel = ctx.author.voice.channel
             song = self.search_youtube(query)
-            if type(song) == type(True):
-                await ctx.send("Wrong Song,  Need Another")
-            else:
-                self.music_queue.append([song, voice_channel])
-                await ctx.send("Song Added : %s" % song['title'])
+            self.music_queue.append([song, voice_channel])
+            await ctx.send("Song Added : %s" % song['title'])
 
-                if self.is_playing == False:
-                    await self.play_music()
+            if self.is_playing == False:
+                await self.play_music()
+
+        except AttributeError:
+            return
+
+        # if voice_channel is None:
+        #     await ctx.send("Connected")
+        # else:
+        #     song = self.search_youtube(query)
+        #     if type(song) == type(True):
+        #         await ctx.send("Wrong Song,  Need Another")
+        #     else:
+        #         self.music_queue.append([song, voice_channel])
+        #         await ctx.send("Song Added : %s" % song['title'])
+
+        #         if self.is_playing == False:
+        #             await self.play_music()
 
     @commands.command()
     async def q(self, ctx):
