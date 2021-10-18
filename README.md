@@ -6,10 +6,6 @@ Bot for personal purpose in discord.
 
 Bot must be install ffmpeg for working.[FFMPEG]()
 
-```bash
-pip install foobar
-```
-
 ## Usage
 
 ```python
